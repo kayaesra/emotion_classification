@@ -5,8 +5,9 @@ This repository presents a rigorous comparative analysis of **Emotion Classifica
 ---
 
 ##  1. Project Objectives
-This project explores emotion classification from text using multiple approaches, ranging from classical machine learning models to large language models (LLMs) and fine-tuned transformer-based architectures.
-The main objective is to compare traditional NLP pipelines with modern transformer-based methods and analyze their strengths and limitations on the same dataset.
+
+This project focuses on emotion classification from text using a diverse set of approaches, ranging from classical machine learning models to large language models (LLMs) and fine-tuned transformer-based architectures.The primary objective is to systematically compare traditional NLP pipelines with modern transformer-based methods on the same dataset. By evaluating their performance, interpretability, and computational trade-offs, the project aims to highlight the strengths and limitations of each approach in practical emotion classification tasks.
+
 ---
 
 ##  2. Dataset Insight: `dair-ai/emotion`
