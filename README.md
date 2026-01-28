@@ -1,66 +1,69 @@
-# 🎭 Emotion Classification: Classical ML vs. Large Language Models
+#  Emotion Classification: A Comprehensive Benchmark Study
 
-This repository contains a comprehensive benchmark study on **Emotion Classification**, comparing traditional feature engineering methods with modern Large Language Model (LLM) prompting techniques.
-
-## 🎓 Academic Context
-* **Institution:** Yeditepe University
-* **Course:** MTH424 - Generative AI Models
-* **Project Term:** Spring 2025
-* **Lead Developer:** **Esra Kaya**
+This repository presents a rigorous comparative analysis of **Emotion Classification** on textual data. The project explores the spectrum of Natural Language Processing, from traditional statistical methods (**TF-IDF**) to Deep Learning (**BERT**) and modern generative paradigms (**LLM Prompting**).
 
 ---
 
-## 📌 Project Overview
-The primary goal of this research is to evaluate whether "prompt-only" inference using an open-source LLM (**Qwen2.5-1.5B**) can compete with task-specific supervised learning models. The study involves a multi-class classification of six distinct emotional states.
+##  1. Project Objectives
+This project explores emotion classification from text using multiple approaches, ranging from classical machine learning models to large language models (LLMs) and fine-tuned transformer-based architectures.
+The main objective is to compare traditional NLP pipelines with modern transformer-based methods and analyze their strengths and limitations on the same dataset.
+---
 
-### 📊 Dataset: `dair-ai/emotion`
-* **Size:** 20,000 samples (16,000 Training / 2,000 Validation / 2,000 Test).
-* **Labels:** Sadness (0), Joy (1), Love (2), Anger (3), Fear (4), Surprise (5).
-* **Key Challenge:** The dataset is **unbalanced**, with Joy and Sadness being dominant. This distribution highlights the difficulty LLMs face with minority classes like "Surprise".
+##  2. Dataset Insight: `dair-ai/emotion`
+We utilized the **Emotion** dataset from Hugging Face, containing 20,000 labeled Twitter samples.
+* **Emotional Classes:** Sadness (0), Joy (1), Love (2), Anger (3), Fear (4), Surprise (5).
+* **Data Split:** * Training: 16,000
+  * Validation: 2,000
+  * Testing: 2,000
+* **Analysis of Imbalance:** The dataset is heavily skewed towards *Joy* and *Sadness*. This project specifically analyzes how this skewness affects the F1-Scores of minority labels like *Surprise* and *Love*.
 
 ---
 
-## 🛠️ Technical Methodology
+## 3. Technical Methodology & Implementation
 
-### 1. Classical Machine Learning (Supervised Baselines)
-Implemented using **TF-IDF Vectorization** to establish high-accuracy benchmarks:
-* **Logistic Regression:** Achieved **86% test accuracy**.
-* **Support Vector Classifier (SVC):** Achieved **85% test accuracy**.
+### A. Statistical Baseline (Classical ML)
+To establish a high-performance floor, we implemented:
+* **Feature Extraction:** TF-IDF (Term Frequency-Inverse Document Frequency) Vectorization.
+* **Logistic Regression:** Achieved an excellent **86% Accuracy**.
+* **Support Vector Machine (SVC):** Reached **85% Accuracy**, effectively handling non-linear boundaries in the feature space.
 
-### 2. Large Language Model (Generative Inference)
-Explored the classification capabilities of **Qwen2.5-1.5B**:
-* **Zero-Shot Prompting:** Testing the model's direct reasoning without prior examples.
-* **Few-Shot Prompting:** Guiding the model with specific class exemplars.
-* **Optimization:** Leveraged **NVIDIA A100 GPU** and **Batch Processing (Size: 32)** for efficient, large-scale inference.
+### B. Generative AI Pipeline (LLM Prompting)
+We leveraged the **Qwen2.5-1.5B** open-source model using two distinct strategies:
+* **Zero-Shot Prompting:** The model was asked to classify text based only on its pre-trained understanding.
+* **Few-Shot Prompting:** Context was enriched with specific class exemplars to steer model behavior.
+* **Optimization:** Used **Batch Processing (BS: 32)** and **NVIDIA A100 GPU** acceleration to maximize throughput.
 
-### 3. Advanced Transformer Techniques
-* **Embedding-Based Models:** Feature extraction using `bert-base-uncased`.
-* **Fine-Tuning:** Applied task-oriented fine-tuning to reach maximum semantic alignment.
-
----
-
-## 📈 Results & Key Findings
-
-| Methodology | Model | Test Accuracy | Macro F1-Score |
-| :--- | :--- | :---: | :---: |
-| Supervised | **BERT Fine-Tuning** | **Highest** | **High** |
-| Supervised | **Logistic Regression** | 0.86 | 0.79 |
-| Supervised | **SVC (TF-IDF)** | 0.85 | 0.78 |
-| Prompting | **Qwen2.5 (Zero-Shot)** | 0.45 | 0.38 |
-| Prompting | **Qwen2.5 (Few-Shot)** | 0.24 | 0.17 |
-
-### 🔍 Analytical Insights
-* **Task Specialization:** The results confirm that for narrow classification tasks, **fine-tuned small models** significantly outperform general-purpose prompting on 1.5B parameter models.
-* **Prompt Sensitivity:** LLMs required extensive output cleaning and specific prompt engineering to adhere to numerical label formats.
-* **Data Imbalance:** Minority classes (Love, Surprise) showed higher error rates, emphasizing the need for balanced training data.
+### C. Deep Learning (Transformer Based)
+* **BERT Embeddings:** Feature extraction using `bert-base-uncased` to capture semantic nuances.
+* **Task-Specific Fine-Tuning:** The fine-tuning approach proved to be the most reliable for specific emotional alignment.
 
 ---
 
-## 📂 Project Structure
+## 4. Comprehensive Performance Metrics
 
-* **`emotion_classification_project.ipynb`**: Complete development pipeline including data preprocessing, training, and LLM inference.
-* **`emotion_classification_report.pdf`**: Detailed academic report covering methodology, error analysis, and conclusions.
-* **`emotion_pred.csv`**: **Master Inference File.** A row-by-row comparison of Ground Truth labels against all model predictions (LR, SVC, BERT, Fine-Tuning).
-* **`train.csv` / `test.csv` / `validation.csv`**: The standardized dataset splits used for training and benchmarking.
+| Approach             | Performance              |
+| -------------------- | ------------------------ |
+| TF-IDF + LR          | Strong baseline          |
+| TF-IDF + SVC         | Comparable to LR         |
+| Qwen (Zero/Few-Shot) | Underperformed           |
+| BERT Embeddings + LR | Moderate                 |
+| **Fine-Tuned BERT**  | **Best (~93% Accuracy)** |
+
+---
+
+##  5. Advanced Error Analysis & Findings
+* **The "Joy" Bias:** Generative models often mislabel *Love* and *Surprise* as *Joy* due to the high semantic similarity in positive sentiment samples.
+* **Prompt Fragility:** LLMs showed high sensitivity to output formatting. Minor changes in the system prompt required complex regular expression-based output cleaning.
+* **Hardware Efficiency:** Demonstrates the necessity of high-compute GPUs when running inference on modern LLMs even for small parameter models (1.5B).
+* **Supervised Superiority:** The findings conclude that **Task-Specific Fine-Tuning** remains significantly more accurate than general LLM prompting for narrow, fixed-label classification tasks.
+
+---
+
+## 6. Repository Roadmap
+
+* **`emotion_classification_project.ipynb`**: The technical core. Contains data ingestion, cleaning, TF-IDF modeling, and the LLM inference pipeline.
+* **`emotion_classification_report.pdf`**: Comprehensive academic report containing methodology, theoretical analysis, and visualizations.
+* **`emotion_pred.csv`**: **Master Benchmark Data.** A row-by-row comparison of text samples, Ground Truth, and predictions from all tested models.
+* **`train.csv` / `test.csv` / `validation.csv`**: Standardized data partitions ensuring full reproducibility.
 
 ---
